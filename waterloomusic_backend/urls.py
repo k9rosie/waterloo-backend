@@ -20,7 +20,7 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 
 from rest_framework.routers import DefaultRouter
-from rest_framework.schemas import get_schema_view
+from rest_framework_swagger.views import get_swagger_view
 from rest_framework.documentation import include_docs_urls
 
 from news.views import ArticleViewSet
@@ -28,7 +28,7 @@ from reviews.views import ReviewViewSet
 from users.views import UserViewSet
 from music.views import AlbumViewSet, ArtistViewSet, LabelViewSet, GenreViewSet
 
-schema_view = get_schema_view(title='Waterloo Music Academy API')
+schema_view = get_swagger_view(title='Waterloo Music Academy API')
 docs_view = include_docs_urls(title='Waterloo Music Academy API')
 
 router = DefaultRouter()

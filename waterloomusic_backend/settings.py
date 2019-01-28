@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework_swagger',
     'corsheaders',
     'rest_framework',
     'news.apps.NewsConfig',
