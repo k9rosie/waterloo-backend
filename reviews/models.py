@@ -1,6 +1,8 @@
 from django.db import models
-from accounts.models import User
+from django.utils.text import slugify
+from users.models import User
 from music.models import Album
+
 
 # Create your models here.
 class Review(models.Model):
@@ -14,12 +16,13 @@ class Review(models.Model):
         ('D', 'D'),
         ('F', 'F')
     )
-    authors = models.ManyToManyField(User)
+    authors = models.ManyToManyField(User, related_name='reviews')
     rating = models.CharField(max_length=2, choices=RATINGS, default='F')
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    standfirst = models.TextField()
+    album = models.OneToOneField(Album, related_name='review', on_delete=models.CASCADE)
+    standfirst = models.TextField(blank=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=50, blank=True)
 
     def album_name(self):
         return self.album.name
@@ -27,8 +30,12 @@ class Review(models.Model):
     def album_artists(self):
         return "\n".join([a.name for a in self.album.artists.all()])
 
-    def written_by(self):
-        return "\n".join([a.first_name + a.last_name])
+    def review_authors(self):
+        return "\n".join([a.name for a in self.authors.all()])
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.album_artists()+'-'+self.album_name())
+        super(Review, self).save(self, *args, **kwargs)
 
     def __str__(self):
         return self.album.name

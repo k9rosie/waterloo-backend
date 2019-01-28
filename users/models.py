@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils.text import slugify
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth import password_validation
 
 
 # Create your models here.
@@ -9,6 +11,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have a valid email address')
 
         user = self.model(
+            name="New User",
             email=self.normalize_email(email)
         )
 
@@ -18,7 +21,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password):
         user = self.create_user(
-            email
+            email,
         )
 
         user.set_password(password)
@@ -30,30 +33,27 @@ class UserManager(BaseUserManager):
         return self.get(email=username)
 
 
-
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=128)
     bio = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=50, blank=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+        if self._password is not None:
+            password_validation.password_changed(self._password, self)
+            self._password = None
+
     def __str__(self):
         return self.name
-
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    @property
-    def is_staff(self):
-        return self.is_superuser

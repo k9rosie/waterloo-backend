@@ -35,7 +35,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
-    'accounts.apps.AccountsConfig',
+    'news.apps.NewsConfig',
+    'users.apps.AccountsConfig',
     'reviews.apps.ReviewsConfig',
     'music.apps.MusicConfig',
     'django.contrib.admin',
@@ -155,7 +156,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'users.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -165,4 +166,9 @@ CORS_ORIGIN_WHITELIST = (
 CORS_ORIGIN_REGEX_WHITELIST = (
     'localhost:3000',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 

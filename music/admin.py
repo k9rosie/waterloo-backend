@@ -8,20 +8,21 @@ from .models import Genre, Label, Artist, Album
 class GenreAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    readonly_fields = ('slug',)
 
 
 @admin.register(Label)
 class LabelAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    readonly_fields = ('slug',)
 
 
 @admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_genres',)
-    list_filter = ('genres__name',)
+    list_display = ('name',)
     search_fields = ('name',)
-    autocomplete_fields = ['genres']
+    readonly_fields = ('slug',)
 
 
 @admin.register(Album)
