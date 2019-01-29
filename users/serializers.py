@@ -11,3 +11,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         lookup_field = 'slug'
         fields = ('url', 'id', 'reviews', 'articles', 'name', 'bio', 'slug')
+
+
+class UserShortSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        lookup_field = 'slug'
+        fields = ('url', 'id', 'name', 'slug')
