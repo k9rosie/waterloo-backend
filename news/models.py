@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils.text import slugify
+from django.utils.crypto import get_random_string
+
 from users.models import User
 
 
 class Article(models.Model):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     authors = models.ManyToManyField(User, related_name='articles')
     title = models.CharField(max_length=280)
     image_width = models.IntegerField(default=1600, blank=True)
@@ -14,6 +17,8 @@ class Article(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=50, blank=True)
+    carousel = models.BooleanField(default=False)
+    top_story = models.BooleanField(default=False)
 
     def article_authors(self):
         return "\n".join([a.name for a in self.authors.all()])

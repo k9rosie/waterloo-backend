@@ -12,17 +12,17 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
 
     list_display = ('name', 'email', 'created_at', 'last_login', 'is_superuser')
-    readonly_fields = ('slug',)
     list_filter = ('is_superuser',)
+    prepopulated_fields = {'slug': ('name',), }
     fieldsets = (
-        (None, {'fields': ('email', 'name', 'bio', 'password',)}),
+        (None, {'fields': ('email', 'name', 'bio', 'password', 'slug')}),
         ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active', 'groups')}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'password1', 'password2')
+            'fields': ('email', 'name', 'password1', 'password2', 'slug')
         }),
     )
 

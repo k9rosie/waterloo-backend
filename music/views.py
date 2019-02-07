@@ -1,28 +1,27 @@
 from rest_framework import viewsets, permissions
 
 from .models import Genre, Label, Artist, Album
-from .serializers import GenreSerializer, LabelSerializer, ArtistSerializer, AlbumSerializer
 
 
-class GenreViewSet(viewsets.ModelViewSet):
+class GenreViewset(viewsets.GenericViewSet):
     queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
+    serializer_class = Genre
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class LabelViewSet(viewsets.ModelViewSet):
+class LabelViewset(viewsets.ModelViewSet):
     queryset = Label.objects.all()
-    serializer_class = LabelSerializer
+    serializer_class = Label
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ArtistViewSet(viewsets.ModelViewSet):
+class ArtistViewset(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
-    serializer_class = ArtistSerializer
+    serializer_class = Artist
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class AlbumViewSet(viewsets.ModelViewSet):
+class AlbumViewset(viewsets.ModelViewSet):
     queryset = Album.objects.all()
-    serializer_class = AlbumSerializer
+    serializer_class = Album
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)

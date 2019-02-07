@@ -1,32 +1,27 @@
 from django.db import models
-from django.utils.text import slugify
+from django.utils.crypto import get_random_string
 
 
 class Genre(models.Model):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     name = models.CharField(unique=True, max_length=16)
     slug = models.SlugField(max_length=50, blank=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Genre, self).save(self, *args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
 class Label(models.Model):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     name = models.CharField(unique=True, max_length=200)
     slug = models.SlugField(max_length=50, blank=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Label, self).save(self, *args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
 class Artist(models.Model):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     name = models.CharField(unique=True, max_length=200)
     image_width = models.IntegerField(default=1600, blank=True)
     image_height = models.IntegerField(default=1600, blank=True)
@@ -37,15 +32,12 @@ class Artist(models.Model):
     labels = models.ManyToManyField(Label, related_name='artists', blank=True)
     slug = models.SlugField(max_length=50, blank=True)
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Artist, self).save(self, *args, **kwargs)
-
     def __str__(self):
         return self.name
 
 
 class Album(models.Model):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     name = models.CharField(max_length=200)
     cover_width = models.IntegerField(default=1600, blank=True)
     cover_height = models.IntegerField(default=1600, blank=True)

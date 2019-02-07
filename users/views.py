@@ -1,10 +1,9 @@
-from rest_framework import viewsets, permissions
+from rest_framework import permissions, viewsets
 
 from .models import User
-from .serializers import UserSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = User
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)

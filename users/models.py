@@ -1,7 +1,6 @@
 from django.db import models
-from django.utils.text import slugify
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth import password_validation
+from django.utils.crypto import get_random_string
 
 
 # Create your models here.
@@ -34,6 +33,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.CharField(primary_key=True, default=get_random_string, editable=False, max_length=8)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=128)
     bio = models.TextField(blank=True)
@@ -47,13 +47,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-        if self._password is not None:
-            password_validation.password_changed(self._password, self)
-            self._password = None
 
     def __str__(self):
         return self.name
