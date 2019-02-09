@@ -8,3 +8,6 @@ class ArticleViewset(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)
+    filter_fields = ('carousel', 'top_story')
+    search_fields = ('title')
+

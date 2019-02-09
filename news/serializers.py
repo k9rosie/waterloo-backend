@@ -9,4 +9,4 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Article
         lookup_field = 'slug'
-        fields = ['id', 'url', 'image_width', 'image_height', 'image', 'title', 'standfirst', 'body', 'authors', 'created_at', 'slug']
+        fields = ['id', 'url', 'image_width', 'image_height', 'image', 'title', 'standfirst', 'body', 'authors', 'created_at', 'top_story', 'carousel', 'slug']
