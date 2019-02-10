@@ -4,8 +4,8 @@ from .models import Genre, Label, Artist, Album
 
 
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
-    albums = serializers.HyperlinkedRelatedField(many=True, view_name='album-detail')
-    genres = serializers.HyperlinkedRelatedField(many=True, view_name='genre-detail')
+    albums = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='album-detail')
+    genres = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='genre-detail')
 
     class Meta:
         model = Genre
@@ -14,8 +14,8 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LabelSerializer(serializers.HyperlinkedModelSerializer):
-    artists = serializers.HyperlinkedRelatedField(many=True, view='artist-detail')
-    albums = serializers.HyperlinkedRelatedField(many=True, view='album-detail')
+    artists = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='artist-detail')
+    albums = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='album-detail')
 
     class Meta:
         model = Label
@@ -24,16 +24,16 @@ class LabelSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
-    albums = serializers.HyperlinkedRelatedField(many=True, view='album-detail')
+    albums = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='album-detail')
 
     class Meta:
         model = Artist
         lookup_field = 'slug'
-        fields = ['id', 'url', 'name', 'image_width', 'image_height', 'image', 'bio', 'genres', 'labels', 'deans_list', 'slug']
+        fields = ['id', 'url', 'name', 'image_width', 'image_height', 'image', 'bio', 'genres', 'labels', 'albums', 'deans_list', 'slug']
 
 
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
-    review = serializers.HyperlinkedRelatedField(view_name='review-detail')
+    review = serializers.HyperlinkedRelatedField(read_only=True, view_name='review-detail')
 
     class Meta:
         model = Album

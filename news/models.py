@@ -11,7 +11,7 @@ class Article(models.Model):
     title = models.CharField(max_length=280)
     image_width = models.IntegerField(default=1600, blank=True)
     image_height = models.IntegerField(default=1600, blank=True)
-    image = models.ImageField(upload_to='artist_imgs', height_field='image_width', width_field='image_height',
+    image = models.ImageField(upload_to='blog/%Y/%m/%d', height_field='image_width', width_field='image_height',
                               blank=True)
     standfirst = models.TextField(blank=True)
     body = models.TextField()

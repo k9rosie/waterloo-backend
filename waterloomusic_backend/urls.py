@@ -28,7 +28,7 @@ from reviews.views import ReviewViewset
 from users.views import UserViewset
 from music.views import AlbumViewset, ArtistViewset, LabelViewset, GenreViewset
 
-schema_view = get_schema_view(title='Waterloo Music Academy API')
+schema_view = get_schema_view(title='Waterloo Music Academy API', url='http://localhost:8000/')
 docs_view = get_swagger_view(title='Waterloo Music Academy API')
 
 router = DefaultRouter()
@@ -42,8 +42,8 @@ router.register(r'genres', GenreViewset)
 
 urlpatterns = [
     path(r'', include(router.urls)),
-    path(r'docs/', docs_view),
     path(r'schema/', schema_view),
+    path(r'docs/', docs_view),
     path(r'api-auth/', include('rest_framework.urls')),
     path(r'admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \

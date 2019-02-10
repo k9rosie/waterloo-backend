@@ -4,8 +4,8 @@ from .models import User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    reviews = serializers.HyperlinkedRelatedField(many=True, view_name='review-detail')
-    articles = serializers.HyperlinkedRelatedField(many=True, view_name='article-detail')
+    reviews = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='review-detail')
+    articles = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='article-detail')
 
     class Meta:
         model = User
