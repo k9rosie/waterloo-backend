@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 
-from users.models import User
+from accounts.models import User
 from music.models import Album
 
 

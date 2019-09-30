@@ -17,7 +17,6 @@ ENVIRONMENT = os.environ['ENVIRONMENT'] if 'ENVIRONMENT' in os.environ else 'dev
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -29,16 +28,12 @@ DEBUG = False if ENVIRONMENT == 'production' else True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'django_filters',
-    'rest_framework_swagger',
     'corsheaders',
-    'rest_framework',
     'news.apps.NewsConfig',
-    'users.apps.AccountsConfig',
+    'accounts.apps.AccountsConfig',
     'reviews.apps.ReviewsConfig',
     'music.apps.MusicConfig',
     'django.contrib.admin',
@@ -47,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'waterloomusic_backend.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -115,8 +110,6 @@ elif ENVIRONMENT == 'production' or ENVIRONMENT == 'staging':
             }
         }
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -135,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -149,7 +141,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -159,16 +150,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+AUTH_USER_MODEL = 'accounts.User'
 
-AUTH_USER_MODEL = 'users.User'
-
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
-)
+
 CORS_ORIGIN_REGEX_WHITELIST = (
-    'localhost:3000',
+    'http[s]://localhost:3000',
 )
 
 REST_FRAMEWORK = {
@@ -177,3 +164,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
+GRAPHENE = {
+    'SCHEMA': 'waterloomusic_backend.schema.schema'
+}

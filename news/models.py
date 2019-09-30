@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 
-from users.models import User
+from accounts.models import User
 
 
 class Article(models.Model):
@@ -17,8 +17,7 @@ class Article(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=50, blank=True)
-    carousel = models.BooleanField(default=False)
-    top_story = models.BooleanField(default=False)
+    frontpage = models.BooleanField(default=False)
 
     def article_authors(self):
         return "\n".join([a.name for a in self.authors.all()])

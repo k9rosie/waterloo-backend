@@ -7,7 +7,7 @@ import django.utils.crypto
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0006_user_slug'),
+        ('accounts', '0006_user_slug'),
     ]
 
     operations = [
