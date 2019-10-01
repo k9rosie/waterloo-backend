@@ -4,7 +4,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 
 from .models import Genre, Label, Artist, Album
 
-char_field_default_filters = ['exact', 'icontains', 'istartswith', 'iendswith', 'regex', 'iregex']
+char_field_default_filters = ['icontains', 'istartswith', 'iendswith', 'regex']
 date_default_filters = ['range', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter']
 
 
@@ -31,7 +31,7 @@ class ArtistNode(DjangoObjectType):
         filter_fields = {
             'id': ['exact'],
             'name': char_field_default_filters,
-            'bio': char_field_default_filters[:-4],
+            'bio': ['icontains'],
             'deans_list': ['exact'],
             'labels': char_field_default_filters,
             'genres': char_field_default_filters
