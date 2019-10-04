@@ -8,14 +8,8 @@ from .models import User
 class UserNode(DjangoObjectType):
     class Meta:
         model = User
-        filter_fields = {
-            'id': ['exact'],
-            'name': ['exact', 'icontains'],
-            'bio': ['icontains'],
-            'created_at': ['year', 'iso_year'],
-            'is_staff': ['exact']
-        }
-        interface = (relay.Node,)
+        filter_fields = ['id', 'name', 'bio', 'is_staff', 'articles', 'reviews']
+        interfaces = (relay.Node,)
 
 
 class Query(ObjectType):

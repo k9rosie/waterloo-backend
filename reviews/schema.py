@@ -8,15 +8,7 @@ from .models import Review
 class ReviewNode(DjangoObjectType):
     class Meta:
         model = Review
-        filter_fields = {
-            'id': ['exact'],
-            'authors': ['icontains', 'regex'],
-            'rating': ['exact'],
-            'album': ['icontains', 'regex'],
-            'standfirst': ['icontains'],
-            'body': ['icontains'],
-            'created_at': ['range', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter']
-        }
+        filter_fields = ['id', 'authors', 'rating', 'album', 'standfirst', 'body', 'created_at']
         interfaces = (relay.Node,)
 
 

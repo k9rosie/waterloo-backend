@@ -4,52 +4,32 @@ from graphene_django.filter import DjangoFilterConnectionField
 
 from .models import Genre, Label, Artist, Album
 
-char_field_default_filters = ['icontains', 'istartswith', 'iendswith', 'regex']
-date_default_filters = ['range', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter']
-
 
 class GenreNode(DjangoObjectType):
     class Meta:
         model = Genre
-        filter_fields = ['name', 'artists', 'albums']
+        filter_fields = ['id', 'name', 'artists', 'albums']
         interfaces = (relay.Node,)
 
 
 class LabelNode(DjangoObjectType):
     class Meta:
         model = Label
-        filter_fields = {
-            'id': ['exact'],
-            'name': char_field_default_filters,
-        }
+        filter_fields = ['id', 'name', 'artists', 'albums']
         interfaces = (relay.Node,)
 
 
 class ArtistNode(DjangoObjectType):
     class Meta:
         model = Artist
-        filter_fields = {
-            'id': ['exact'],
-            'name': char_field_default_filters,
-            'bio': ['icontains'],
-            'deans_list': ['exact'],
-            'labels': char_field_default_filters,
-            'genres': char_field_default_filters
-        }
+        filter_fields = ['id', 'name', 'bio', 'deans_list', 'labels', 'genres', 'albums']
         interfaces = (relay.Node,)
 
 
 class AlbumNode(DjangoObjectType):
     class Meta:
         model = Album
-        filter_fields = {
-            'id': ['exact'],
-            'name': char_field_default_filters,
-            'artists': char_field_default_filters,
-            'genres': char_field_default_filters,
-            'labels': char_field_default_filters,
-            'release_date': date_default_filters
-        }
+        filter_fields = ['id', 'name', 'artists', 'genres', 'labels', 'release_date']
         interfaces = (relay.Node,)
 
 
