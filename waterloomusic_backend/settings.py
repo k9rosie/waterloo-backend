@@ -155,7 +155,7 @@ AUTH_USER_MODEL = 'accounts.User'
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_REGEX_WHITELIST = (
-    'http[s]://localhost:3000',
+    'http://localhost:3000',
 )
 
 REST_FRAMEWORK = {
